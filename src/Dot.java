@@ -16,7 +16,6 @@ public class Dot {
 	private float x, y, weight;
 	private Color color;
 	private int m;
-	private File f;
 	public Dot(float x, float y, float weight, Color color)
 	{
 		this.x = x;
@@ -27,22 +26,8 @@ public class Dot {
 		
 	}
 
-	public void draw(Graphics g, BufferedImage previous)  {
-		g.drawImage(previous, 0, 0, null);
-		Graphics2D imageG = previous.createGraphics();
-		imageG.drawImage(previous, 0, 0, null);
-		imageG.setColor(color);
-		imageG.translate(0, m);
-		imageG.scale(1, -1);
-		imageG.translate(0, -m);
-		imageG.fillOval((int) x*2 + 400, (int) y*2 , (int)(weight*60), (int)(weight*60));
-		f.delete();
-		f = new File("f.jpg");
-		try {
-			ImageIO.write(previous, "JPG", f);
-			
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
+	public void draw(Graphics g)  {
+		g.setColor(color);
+		g.fillOval((int) x+300, (int) (600-y) , (int)(weight*100), (int)(weight*100));
 	}
 }

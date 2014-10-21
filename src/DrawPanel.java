@@ -1,9 +1,7 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
@@ -11,31 +9,27 @@ import javax.swing.JPanel;
 public class DrawPanel extends JPanel
 {
 	public int WIDTH, HEIGHT;
-	private Dot dot;
-	private BufferedImage previous;
+	private ArrayList<Dot> dots = new ArrayList<Dot>();
 	public DrawPanel(int w, int h)
 	{
 		WIDTH = w;
 		HEIGHT = h;	
-		previous = new BufferedImage(600, 600, BufferedImage.TYPE_INT_ARGB);
 		setBackground(Color.WHITE);
 	}
 	
 	public void addDot(Dot dot)
 	{
-		this.dot = dot;
+		dots.add(dot);
 	}
 	
 	public void paintComponent(Graphics g)
 	{
 		super.paintComponent(g);
-		if(dot != null)
+		if(dots.get(0) != null)
 		{
-			
-			try {
-				dot.draw(g, previous);
-			} catch (NullPointerException e) {
-				// TODO Auto-generated catch block
+			for(int i = 0; i < dots.size(); i++)
+			{
+				dots.get(i).draw(g);
 			}
 		}
 		
