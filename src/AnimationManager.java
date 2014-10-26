@@ -26,6 +26,9 @@ public class AnimationManager implements Runnable
 	private Frame currFrame;
 	private DrawPanel p;
 	private Dot dot;
+	private Color[] colors = {Color.RED, Color.BLACK, Color.BLUE, Color.RED, Color.CYAN, Color.GREEN, Color.PINK};
+	private static int colorNum = 0;
+	private int colorCount = 0;
 	public AnimationManager(JFrame mw, JPanel drawingArea)
 	{
 		mainWindow = mw;
@@ -39,6 +42,7 @@ public class AnimationManager implements Runnable
 		
 		while(true)	 
 		{
+			
 			timeAtBeginningOfLoop = System.currentTimeMillis();
 			
 			
@@ -46,13 +50,37 @@ public class AnimationManager implements Runnable
 			FingerList fingers = currFrame.fingers();
 			Finger frontFinger = fingers.frontmost();
 			Vector fingerTip = frontFinger.tipPosition();
-			
+			int extendCount = 0;
 			float fingerX = fingerTip.getX();
 			float fingerY = fingerTip.getY();
 			float fingerZ = fingerTip.getZ();
-			dot = new Dot(fingerX/10 * 10, fingerY/10 * 10, fingerZ/500, Color.RED);
-			p.addDot(dot);
-	
+			for(int i = 0; i < fingers.count(); i++)
+				if(fingers.get(i).isExtended())
+					extendCount++;
+			if(extendCount == 0)
+			{
+				colorCount++;
+				if(colorNum == 6)
+					colorNum = 0;
+				else if(colorCount > 20)
+					{
+						colorNum++;
+						colorCount = 0;
+					}
+			}
+			if(extendCount == 5)
+			{
+				p.addDot(new Dot(fingerTip.getX(), fingerTip.getY(), fingerTip.getZ()/500, Color.WHITE));
+			}
+			else
+			{
+				dot = new Dot(fingerX/10 * 10, fingerY/10 * 10, fingerZ/500, colors[colorNum]);
+				p.addDot(dot);
+			}
+			
+			
+				
+		
 			mainWindow.repaint();
 			
 			timeAtEndOfLoop = System.currentTimeMillis();
@@ -60,7 +88,7 @@ public class AnimationManager implements Runnable
 			if(pause < 0) pause = 1;
 			try
 			{
-				Thread.sleep(pause);
+				Thread.sleep(10);
 			}
 			catch(Exception e)
 			{

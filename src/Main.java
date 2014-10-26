@@ -29,7 +29,7 @@ public class Main extends JFrame
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
 		contentPane.add( drawingArea, BorderLayout.CENTER );
-		
+	
 		setVisible(true);
 	}
 	
