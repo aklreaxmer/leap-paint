@@ -28,7 +28,7 @@ public class Dot {
 
 	public void draw(Graphics g)  {
 		g.setColor(color);
-		g.fillOval((int) x+300, (int) (600-y) , (int)(weight*100), (int)(weight*100));
+		g.fillOval((int) x+400, (int) (700-y) , (int)(weight*100), (int)(weight*100));
 	}
 	public String toString()
 	{
